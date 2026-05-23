@@ -1,0 +1,75 @@
+# ======================================================================
+# ResQRoute: Multi-Agent Vehicle Configuration Parameters
+# ======================================================================
+# Note: Physical parameters (length, accel, max_speed) map to SUMO vTypes.
+# Priority levels map to the Masked-RL conflict resolution engine.
+# ======================================================================
+
+vehicle_classes:
+  fire_engine:
+    id: "FIRE"
+    sumo_vClass: "emergency"
+    gui_shape: "firebrigade"
+    color: "#ff4444"        # Deep Red
+    ai_priority_level: 1    # Highest Priority (Overrides all)
+    description: "Heavy Duty Fire Brigade Unit"
+    physics:
+      length: 8.5           # meters (Affects turning radius & junction clearing time)
+      width: 2.5            # meters
+      max_speed: 25.0       # m/s (approx 90 km/h)
+      accel: 1.5            # m/s^2 (Slower acceleration due to mass)
+      decel: 3.5            # m/s^2
+    rl_agent:
+      masked_routing: true
+      platoon_leader: true  # Can act as a draft leader for ambulances
+
+  ambulance:
+    id: "AMB"
+    sumo_vClass: "emergency"
+    gui_shape: "ambulance"
+    color: "#00e676"        # Bright Green
+    ai_priority_level: 2    # Yields only to Fire Engines
+    description: "Advanced Life Support (ALS) Unit"
+    physics:
+      length: 5.8           
+      width: 2.2            
+      max_speed: 30.0       # m/s (approx 108 km/h)
+      accel: 2.5            # Faster acceleration than Fire Engine
+      decel: 4.5            
+    rl_agent:
+      masked_routing: true
+      platoon_leader: false
+
+  police:
+    id: "POLICE"
+    sumo_vClass: "authority"
+    gui_shape: "police"
+    color: "#2979ff"        # Bright Blue
+    ai_priority_level: 2    # Equal to Ambulance (Requires dynamic state resolution)
+    description: "High-Speed Interceptor"
+    physics:
+      length: 4.5           
+      width: 1.8            
+      max_speed: 35.0       # m/s (approx 126 km/h) - Fastest unit
+      accel: 3.5            
+      decel: 5.0            
+    rl_agent:
+      masked_routing: true
+      platoon_leader: true
+
+  vip_convoy:
+    id: "VIP"
+    sumo_vClass: "vip"
+    gui_shape: "passenger/sedan"
+    color: "#aa00ff"        # Purple / Black Convoy
+    ai_priority_level: 3    # Lowest Priority (Must yield to all emergencies)
+    description: "Z-Plus Security Presidential Convoy"
+    physics:
+      length: 5.0           
+      width: 2.0            
+      max_speed: 28.0       
+      accel: 2.0            
+      decel: 4.0            
+    rl_agent:
+      masked_routing: false # Fixed route, cannot dynamically reroute
+      platoon_leader: false

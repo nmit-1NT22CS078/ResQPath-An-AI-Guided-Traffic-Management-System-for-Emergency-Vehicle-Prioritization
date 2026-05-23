@@ -1,0 +1,33 @@
+# ==========================================
+# ResQRoute: Edge Node Configuration
+# ==========================================
+
+# 1. VISUAL SETTINGS (BGR Format for OpenCV)
+# Green: [0, 255, 0] | Red: [0, 0, 255]
+visuals:
+  vehicle_color: [0, 0, 255]  # Strict Red for all vehicles
+  person_color: [0, 255, 0]   # Strict Green for people
+
+# 2. EMERGENCY LABELS & PRIORITY
+# This maps the YOLO class ID to a specific Label 
+# even though the box remains RED.
+class_definitions:
+  0: 
+    label: "PERSON"
+    type: "pedestrian"
+  1: 
+    label: "VEHICLE"
+    type: "normal"
+
+  2: 
+    label: "AMBULANCE"
+    type: "emergency"
+  3: 
+    label: "FIRE ENGINE"
+    type: "emergency"
+  4: 
+    label: "VIP" # Motorcycle
+    type: "emergency"
+  5: 
+    label: "POLICE" # Motorcycle
+    type: "emergency"
